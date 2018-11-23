@@ -1,0 +1,39 @@
+.message {
+    display: inline-block;
+    width: 100%;
+}
+.message__content {
+    max-width: 90%;
+    border-radius: 5px;
+    font-size: 14px;
+    margin: 0 10px;
+    padding: 5px 10px 5px 12px;
+
+    &.message__left {
+        float: left;
+        background: #05728f none repeat scroll 0 0;
+        border: 1px solid #cccccc;
+        color: #fff;
+    }
+    &.message__right {
+        float: right;
+        background: #ebebeb none repeat scroll 0 0;
+        border: 1px solid #cccccc;
+        color: #646464;
+    }
+    .message__username {
+        font-size: 10px;
+        position: relative;
+        top: -5px;
+        left: -10px;
+        font-weight: 600;
+        text-decoration: underline;
+    }
+    .message__datetime {
+        font-size: 10px;
+        position: relative;
+        bottom: -5px;
+        right: -5px;
+        text-align: right;
+    }
+}

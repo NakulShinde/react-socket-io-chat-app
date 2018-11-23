@@ -12,3 +12,7 @@ Steps to Install:
 - #npm 
 
 Unit testing:
+- #npm test 
+
+Test Coverage Report:
+- #npm test -- --coverage

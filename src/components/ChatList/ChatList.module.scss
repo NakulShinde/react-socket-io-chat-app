@@ -1,0 +1,31 @@
+.chat__list {
+    border-right: 1px solid #cccccc;
+    flex: 1;
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        text-align: left;
+    }
+    .header {
+        padding: 10px 16px;
+        border-bottom: 1px solid #cccccc;
+    }
+    li {
+        display: block;
+        color: #000;
+        font-size: 14px;
+        padding: 8px 16px;
+        text-decoration: none;
+        border-bottom: 1px solid #cccccc;
+        cursor: pointer;
+        &.active {
+            background-color: #4CAF50;
+            color: white;
+        }
+        &:hover:not(.active) {
+            background-color: #555;
+            color: white;
+        }
+    }
+}
