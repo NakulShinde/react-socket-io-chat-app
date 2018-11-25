@@ -12,7 +12,7 @@ it("renders MainContainer snapshot correctly", () => {
     expect(tree).toMatchSnapshot();
 });
 
-it("onLogoutClick called on logout click", async() => {
+it("onLogoutClick called on logout click", () => {
     const props = {
         onLogoutClick: jest.fn(),
         userName:"xxxx"
