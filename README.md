@@ -18,12 +18,14 @@ Functionality
 - more than 80% code coverage (See attached image below)
 
 - Note: 
-  - unique userName restriction added for chat app. It will throw error on duplicate userNames
-  - User registration and registration sucess & error are handled for this app only. [TODO: user registration REST API]
+  - Unique userName restriction added for chat app. It will throw error on duplicate userNames. (If nothing happening on user register check if socket.io is running on http://localhost:4000 by visiting this in browser shows "Hello World! From scoket.io app". if not some issue with running node-socket.io service )
+  - User registration and registration sucess & error are handled over socket.io events for now. [TODO: user registration REST API]
+  - If node server/socket.io fails. All user gets 'disconnected' events over socket.io and all goes in logged out state. And user wont be able to register/use it until node service comes up.
 
 Steps to Install:
 - #npm install
 - #npm start
+- visit http://localhost:3000
 
 Unit testing:
 - #npm test 
