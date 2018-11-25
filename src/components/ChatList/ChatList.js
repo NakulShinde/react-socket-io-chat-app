@@ -10,7 +10,8 @@ class ChatList extends Component {
         super();
         this.state = {
             onlineUserList: [],
-            searchText: ''
+            searchText: '',
+            newChatCount: {}
         }
         this._onUserListUpdate = this
             ._onUserListUpdate
@@ -25,6 +26,27 @@ class ChatList extends Component {
         subscribeToUserListUpdate(this._onUserListUpdate)
     }
 
+    componentWillReceiveProps(newProps) {
+        if (this.state !== newProps) {
+            if (newProps.notifyUserChat && newProps.notifyUserChat !== ''
+                && newProps.selectedUserForChat !== newProps.notifyUserChat) {
+                this.setState((prev, next) => {
+                    let user = prev.newChatCount[newProps.notifyUserChat];
+                    let updatedUserChatCount = Object.assign({
+                        ...prev.newChatCount
+                    }, {
+                        [newProps.notifyUserChat]: {
+                            chatCount: (user && user.chatCount)
+                                ? ++user.chatCount
+                                : 1
+                        }
+                    })
+                    return {newChatCount: updatedUserChatCount}
+                })
+            }
+        }
+    }
+
     _onUserListUpdate(newUserList) {
         this.setState({
             onlineUserList: [...newUserList]
@@ -35,16 +57,23 @@ class ChatList extends Component {
     }
 
     onUserClick(userName) {
+        //reset chatCount to 0 on user select
+        this.setState((prev, next) => {
+            return {newChatCount : Object.assign({}, {...prev.newChatCount}, {[userName]: {chatCount: 0}})}
+        })
+        //call parent method
         this
             .props
             .onSelectUserForChat(userName)
     }
 
     render() {
-        let {onlineUserList, searchText} = this.state;
+        let {newChatCount, onlineUserList, searchText} = this.state;
 
         onlineUserList = onlineUserList.filter((user) => {
-            return (user !== this.props.userName && ((searchText !== '')? user.indexOf(searchText) !== -1 : true));
+            return (user !== this.props.userName && ((searchText !== '')
+                ? user.indexOf(searchText) !== -1
+                : true));
         })
 
         return (
@@ -58,7 +87,7 @@ class ChatList extends Component {
                 </div>
 
                 <ul>
-                    {onlineUserList.map((chat, index) => {
+                    {onlineUserList.map((user, index) => {
                         return <li
                             key={index}
                             className={(onlineUserList[index] === this.props.selectedUserForChat)
@@ -66,6 +95,9 @@ class ChatList extends Component {
                             : ''}
                             onClick={() => this.onUserClick(onlineUserList[index])}>
                             {onlineUserList[index]}
+
+                            {(newChatCount[onlineUserList[index]] && newChatCount[onlineUserList[index]].chatCount > 0) 
+                                && <span className={styles.badge}>{newChatCount[onlineUserList[index]].chatCount}</span>}
                         </li>
                     })}
                     {(onlineUserList.length === 0) && <li>No user to chat</li>}

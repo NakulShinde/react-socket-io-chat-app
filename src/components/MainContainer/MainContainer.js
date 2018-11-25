@@ -13,7 +13,8 @@ class MainContainer extends Component {
         super();
         this.state = {
             selectedUserForChat: '',
-            chatHistory: {}
+            chatHistory: {},
+            notifyUserChat: ''
         }
         this.onSelectUserForChat = this
             .onSelectUserForChat
@@ -35,9 +36,8 @@ class MainContainer extends Component {
     }
 
     _onPrivateMessage(msgObj) {
-
         if (msgObj.to === this.props.userName) {
-            this._updateMsgInChatHistory(msgObj.from, msgObj);
+            this._updateMsgInChatHistory(msgObj.from, msgObj, true);
         }
     }
 
@@ -45,7 +45,7 @@ class MainContainer extends Component {
         this.setState({ selectedUserForChat: user })
     }
 
-    _updateMsgInChatHistory(chatWithUser, message) {
+    _updateMsgInChatHistory(chatWithUser, message, notify = false) {
         const { chatHistory } = this.state;
 
         let currentUserChat = chatHistory[chatWithUser] || [];
@@ -57,12 +57,12 @@ class MainContainer extends Component {
             ...chatHistory
         }, { [chatWithUser]: newChatHistory });
 
-        this.setState({ chatHistory: newStateChatHistory })
+        this.setState({ chatHistory: newStateChatHistory, notifyUserChat: (notify)? message.from : '' })
     }
 
     updateCurrentChat(message) {
         publishToPrivateMessages(message);
-        this._updateMsgInChatHistory(this.state.selectedUserForChat, message)
+        this._updateMsgInChatHistory(this.state.selectedUserForChat, message, false)
     }
 
     _onLogoutClick() {
@@ -72,7 +72,7 @@ class MainContainer extends Component {
     }
 
     render() {
-        const { chatHistory, selectedUserForChat } = this.state;
+        const { chatHistory, notifyUserChat, selectedUserForChat } = this.state;
         const { userName } = this.props;
         let chatContent = <div className={styles.empty__chat__details}></div>;
 
@@ -95,6 +95,7 @@ class MainContainer extends Component {
                     <ChatList
                         selectedUserForChat={selectedUserForChat}
                         onSelectUserForChat={this.onSelectUserForChat}
+                        notifyUserChat={notifyUserChat}
                         userName={userName}></ChatList>
                     {chatContent}
                 </div>

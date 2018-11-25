@@ -35,4 +35,17 @@
             color: white;
         }
     }
+    .badge {
+        padding: 3px 5px;
+        font-size: 75%;
+        font-weight: 700;
+        line-height: 1;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        border-radius: 10px;
+        background-color: #05728f;
+        color: #fff;
+        float: right;    
+    }
 }
