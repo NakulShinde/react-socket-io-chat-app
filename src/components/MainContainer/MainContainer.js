@@ -62,7 +62,7 @@ class MainContainer extends Component {
 
     updateCurrentChat(message) {
         publishToPrivateMessages(message);
-        this._updateMsgInChatHistory(this.state.selectedUserForChat, message, false)
+        this._updateMsgInChatHistory(message.to, message, false)
     }
 
     _onLogoutClick() {
