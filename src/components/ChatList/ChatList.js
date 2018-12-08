@@ -27,7 +27,7 @@ class ChatList extends Component {
     }
 
     componentWillReceiveProps(newProps) {
-        if (this.state !== newProps) {
+        if (this.props !== newProps) {
             if (newProps.notifyUserChat && newProps.notifyUserChat !== ''
                 && newProps.selectedUserForChat !== newProps.notifyUserChat) {
                 this.setState((prev, next) => {
