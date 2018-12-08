@@ -42,7 +42,7 @@ class MainContainer extends Component {
     }
 
     onSelectUserForChat(user) {
-        this.setState({ selectedUserForChat: user })
+        this.setState({ selectedUserForChat: user, notifyUserChat: false })
     }
 
     _updateMsgInChatHistory(chatWithUser, message, notify = false) {
